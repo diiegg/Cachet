@@ -82,6 +82,12 @@ class SettingsController extends Controller
                 'icon'   => 'ion-stats-bars',
                 'active' => false,
             ],
+            'credits' => [
+                'title'  => trans('dashboard.settings.credits.credits'),
+                'url'    => route('dashboard.settings.credits'),
+                'icon'   => 'ion-stats-bars',
+                'active' => false,
+            ],
             'about' => [
                 'title'  => CACHET_VERSION,
                 'url'    => 'javascript: void(0);',
@@ -209,6 +215,25 @@ class SettingsController extends Controller
 
         return View::make('dashboard.settings.stylesheet')
             ->withPageTitle(trans('dashboard.settings.stylesheet.stylesheet').' - '.trans('dashboard.dashboard'))
+            ->withSubMenu($this->subMenu);
+    }
+
+    /**
+     * Show the credits view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showCreditsView()
+    {
+        $this->subMenu['credits']['active'] = true;
+
+        $backers = array_map('str_getcsv', file(__DIR__.'/../../../../BACKERS.md'));
+        $credits = array_map('str_getcsv', file(__DIR__.'/../../../../CREDITS.md'));
+
+        return View::make('dashboard.settings.credits')
+            ->withPageTitle(trans('dashboard.settings.credits.credits').' - '.trans('dashboard.dashboard'))
+            ->withBackers($backers)
+            ->withCredits($credits)
             ->withSubMenu($this->subMenu);
     }
 

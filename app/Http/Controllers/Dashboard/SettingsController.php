@@ -85,7 +85,7 @@ class SettingsController extends Controller
             'credits' => [
                 'title'  => trans('dashboard.settings.credits.credits'),
                 'url'    => route('dashboard.settings.credits'),
-                'icon'   => 'ion-stats-bars',
+                'icon'   => 'ion-ios-list',
                 'active' => false,
             ],
             'about' => [
@@ -229,6 +229,16 @@ class SettingsController extends Controller
 
         $backers = array_map('str_getcsv', file(__DIR__.'/../../../../BACKERS.md'));
         $credits = array_map('str_getcsv', file(__DIR__.'/../../../../CREDITS.md'));
+
+        $credits = array_map(function ($credit) {
+            if ($credit[1]) {
+                array_push($credit, md5($credit[1]));
+            }
+
+            return $credit;
+        }, $credits);
+
+        shuffle($credits);
 
         return View::make('dashboard.settings.credits')
             ->withPageTitle(trans('dashboard.settings.credits.credits').' - '.trans('dashboard.dashboard'))

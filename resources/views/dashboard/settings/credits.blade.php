@@ -13,25 +13,33 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <h4>Donators and Sponsors:</h4>
+                <h4>Cachet</h4>
+
+                <p>{!! trans('dashboard.settings.credits.license') !!}</p>
+
+                <hr>
+
+                <h4>{{ trans('dashboard.settings.credits.backers-title') }}</h4>
+
+                <p>{!! trans('dashboard.settings.credits.backers') !!}</p>
+
                 <ul>
                     @foreach($backers as $backer)
                     <li>{{ $backer[0] }}</li>
                     @endforeach
                 </ul>
 
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="form-group">
-                            <p><a class="btn btn-success" href="https://patreon.com/jbrooksuk">Support Cachet</a></p>
-                        </div>
-                    </div>
-                </div>
+                <hr>
 
-                <h4>Credits:</h4>
-                <ul>
+                <h4>{{ trans('dashboard.settings.credits.credits') }}</h4>
+
+                <p>{{ trans('dashboard.settings.credits.thank-you', ['count' => count($credits)]) }}</p>
+
+                <ul class="list-inline">
                     @foreach($credits as $credit)
-                    <li>{{ $credit[0] }}, {{ $credit[1] }} <a href="https://github.com/{{ $credit[2] }}" class="btn btn-xs btn-primary"><i class="ion ion-social-github"></i> {{ $credit[2] }}</a></li>
+                    <li>
+                        <img src="https://gravatar.com/avatar/{{$credit[2]}}/100" class="img-rounded img-responsive" title="{{ $credit[0] }}" data-toggle="tooltip">
+                    </li>
                     @endforeach
                 </ul>
 
